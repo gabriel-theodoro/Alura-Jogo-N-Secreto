@@ -17,8 +17,20 @@ function exibirMensagemInicial() {
 exibirMensagemInicial();
 
 function verificarChute() {
+    const input = document.querySelector('.container__input');
+    const numero = parseInt(input.value);
+    if (numero < 1 || numero > 100) {
+        alert('Por favor, escolha um número entre 1 e 100.');
+        return;
+    }
     let chute = document.querySelector('input').value;
     
+    if (isNaN(chute) || chute < 1 || chute > numeroLimite) {
+        exibirTextoNaTela('p', `Por favor, insira um número válido entre 1 e ${numeroLimite}`);
+        limparCampo();
+        return;
+    }
+
     if (chute == numeroSecreto) {
         exibirTextoNaTela('h1', 'Acertou!');
         let palavraTentativa = tentativas > 1 ? 'tentativas' : 'tentativa';
@@ -54,16 +66,19 @@ function gerarNumeroAleatorio() {
 }
 
 function limparCampo() {
-    chute = document.querySelector('input');
+    let chute = document.querySelector('input');
     chute.value = '';
 }
 
 function reiniciarJogo() {
+    const input = document.querySelector('.container__input');
+    input.value = '';
     numeroSecreto = gerarNumeroAleatorio();
     limparCampo();
     tentativas = 1;
     exibirMensagemInicial();
-    document.getElementById('reiniciar').setAttribute('disabled', true)
+    exibirTextoNaTela('p', 'O jogo foi reiniciado. Escolha um número entre 1 e 100.');
+    document.getElementById('reiniciar').disabled = true;
 }
 
 
